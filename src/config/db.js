@@ -1,18 +1,28 @@
 const {MongoClient} = require('mongodb')
 
 const uri = process.env.DB_URI
-const dbName = 'learn'
+const dbName = process.env.DB_NAME
 const client = new MongoClient(uri)
 
-async function connectDB() {
+let db = ''
+
+const connDB = async () => {
   try {
     await client.connect()
-    console.log('Koneksi ke database sukses')
-    return client.db(dbName)
+    console.log('Succes Connected to database')
+    db = client.db(dbName)
   } catch (err) {
-    console.log('Gagal terkoneksi ke database')
+    console.log('Failed Connected to database')
     process.exit(1)
   }
 }
 
-module.exports = connectDB
+const getDB = () => {
+  if(!db) {
+    throw new Error('Database Not Connected')
+  }
+
+  return db
+}
+
+module.exports = {connDB, getDB}
