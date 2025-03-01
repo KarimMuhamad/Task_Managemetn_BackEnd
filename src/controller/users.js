@@ -5,12 +5,23 @@ const getAllUsers = (req, res) => {
 }
 
 const createNewUser = (req, res) => {
+  const data = req.body
   res.json({
-    message: 'Create new success'
+    message: 'Create new success',
+    data : data,
+  })
+}
+
+const deleteUser = (req, res) => {
+  const id = req.query.id
+  res.json({
+    message: "succes delete user",
+    id: id,
   })
 }
 
 module.exports = {
   getAllUsers,
-  createNewUser
+  createNewUser,
+  deleteUser,
 }
