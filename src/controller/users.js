@@ -1,15 +1,38 @@
-const getAllUsers = (req, res) => {
-  res.json({
-    message: 'Get all users succes',
-  })
+const {getDB} = require('../config/db')
+
+const getAllUsers = async (req, res) => {
+  try {
+    const db = getDB()
+    const data = await db.collection('users').find().toArray()
+  
+    res.json({
+      message: 'Get all users succes',
+      data: data,
+    })
+  } catch (err) {
+    res.json({
+      error: 'Database eror'
+    })
+  }
 }
 
 const createNewUser = (req, res) => {
-  const data = req.body
-  res.json({
-    message: 'Create new success',
-    data : data,
-  })
+  try {
+    const db = getDB()
+    const {username, email, password} = req.body
+  
+    const data = db.collection('users').insertOne({username, email, password})
+  
+    res.json({
+      message: 'Register Succes',
+      data : data,
+    })
+  } catch (err) {
+    res.json({
+      error: 'Database eror'
+    })
+  }
+
 }
 
 const deleteUser = (req, res) => {
