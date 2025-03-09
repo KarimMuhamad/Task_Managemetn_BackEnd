@@ -63,7 +63,7 @@ const loginUser = async (req, res) => {
 
     res.json({msg: "Login Succes", payload, token})
 
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Terjadi kesalahan server" });
   }
